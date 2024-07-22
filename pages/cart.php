@@ -77,7 +77,7 @@ $getcart = $conn->query("SELECT * FROM `v_cart` WHERE `user_id` = '$user_id'");
             <div class="cart-buttons">
                 <div class="row align-items-center">
                     <div class="col-lg-7 col-sm-7 col-md-7">
-                        <a href="?page=toko" class="optional-btn">Continue Shopping</a>
+                        <a href="?page=toko" class="optional-btn">Belanja Lagi</a>
                     </div>
 
                     <div class="col-lg-5 col-sm-5 col-md-5 text-end">

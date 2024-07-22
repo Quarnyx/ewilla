@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $result->fetch_assoc();
 
     if ($user) {
-        if ($user['password'] == $password) {
+        if ($user['password'] == $password && $user['level'] == 'Customer') {
             session_start();
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_email'] = $user['email'];

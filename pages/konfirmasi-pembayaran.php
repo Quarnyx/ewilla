@@ -46,8 +46,9 @@
                 </div>
 
                 <button type="submit" class="default-btn">Konfirmasi</button>
-                <button style="margin-top: 10px;" type="button" class="default-btn">Konfirmasi Pembayaran Via
-                    Wa</button>
+                <a href="https://wa.me/62895617589384" target="_blank" style="margin-top: 10px;" type="button"
+                    class="default-btn">Konfirmasi Pembayaran Via
+                    Wa</a>
 
             </form>
         </div>

@@ -30,8 +30,9 @@ include ('layouts/head.php');
                 </div>
 
                 <div class="search-overlay-form">
-                    <form>
-                        <input type="text" class="input-search" placeholder="Search here...">
+                    <form action="?page=toko" method="get">
+                        <input name="page" type="hidden" value="toko">
+                        <input name="keyword" type="text" class="input-search" placeholder="Search here...">
                         <button type="submit"><i class='bx bx-search-alt'></i></button>
                     </form>
                 </div>

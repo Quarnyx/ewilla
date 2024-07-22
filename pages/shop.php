@@ -46,6 +46,10 @@
                 $cat = $_GET['cat'];
                 $newpro = "SELECT * FROM v_newpro WHERE category_name = '$cat' ORDER BY product_id DESC";
                 $query = mysqli_query($conn, $newpro);
+            } else if (isset($_GET['keyword'])) {
+                $keyword = $_GET['keyword'];
+                $newpro = "SELECT * FROM v_newpro WHERE product_name LIKE '%$keyword%' ORDER BY product_id DESC";
+                $query = mysqli_query($conn, $newpro);
             } else {
                 $newpro = "SELECT * FROM v_newpro ORDER BY product_id DESC";
                 $query = mysqli_query($conn, $newpro);

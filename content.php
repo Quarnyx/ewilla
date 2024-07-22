@@ -6,7 +6,7 @@ if (empty($_SESSION['user_id'])) {
 
 switch ($_GET['page'] ?? '') {
     case '':
-    case 'home':
+    case 'h ome':
         include 'pages/home.php';
         break;
     case 'toko':

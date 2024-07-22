@@ -44,11 +44,11 @@
                     </ul>
 
                     <div class="others-option">
-                        <!-- <div class="option-item">
+                        <div class="option-item">
                             <div class="search-btn-box">
                                 <i class="search-btn bx bx-search-alt"></i>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="option-item">
                             <div class="cart-btn">
