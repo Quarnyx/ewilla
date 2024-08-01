@@ -18,7 +18,7 @@
                         <div class="row g-4">
                             <div class="col-6">
                                 <a href="javascript:void(0);"
-                                    class="d-block p-4 text-center border border-dashed border-soft-primary rounded position-relative">
+                                    class="d-block p-4 text-center border border-dashed bg-soft-success text-success rounded position-relative">
                                     <div
                                         class="avatar-text avatar-md bg-soft-primary text-primary border-soft-primary position-absolute top-0 start-50 translate-middle">
                                         <i class="feather-airplay"></i>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-6">
                                 <a href="javascript:void(0);"
-                                    class="d-block p-4 text-center border border-dashed border-soft-warning rounded position-relative">
+                                    class="d-block p-4 text-center border border-dashed bg-soft-danger text-danger rounded position-relative">
                                     <div
                                         class="avatar-text avatar-md bg-soft-warning text-warning border-soft-warning position-absolute top-0 start-50 translate-middle">
                                         <i class="feather-layers"></i>
@@ -51,6 +51,76 @@
                     </div>
                 </div>
             </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-success border-success text-white overflow-hidden">
+                    <?php
+                    $sql = "SELECT COUNT(status) AS total FROM v_invoicelist WHERE MONTH(timestamp) = MONTH(NOW()) AND status = 'Selesai'";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+                    $total = $row['total'];
+                    ?>
+                    <div class="card-body">
+                        <i class="feather-shopping-cart fs-20"></i>
+                        <h5 class="fs-4 text-reset mt-4 mb-1"><?= $total ?></h5>
+                        <div class="fs-12 text-reset fw-normal">Penjualan Selesai Bulan Ini</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-primary border-primary text-white overflow-hidden">
+                    <?php
+                    $sql = "SELECT COUNT(status) AS total FROM v_invoicelist WHERE MONTH(timestamp) = MONTH(NOW()) AND status = 'Proses'";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+                    $total = $row['total'];
+                    ?>
+                    <div class="card-body">
+                        <i class="feather-shopping-cart fs-20"></i>
+                        <h5 class="fs-4 text-reset mt-4 mb-1"><?= $total ?></h5>
+                        <div class="fs-12 text-reset fw-normal">Penjualan Diproses Bulan Ini</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-indigo border-indigo text-white overflow-hidden">
+                    <?php
+                    $sql = "SELECT sum(order_total) AS total FROM lp_orders WHERE MONTH(timestamp) = MONTH(NOW())";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+                    $total = isset($row['total']) ? $row['total'] : 0;
+                    ?>
+                    <div class="card-body">
+                        <i class="feather-dollar-sign fs-20"></i>
+                        <h5 class="fs-4 text-reset mt-4 mb-1"><?= 'Rp ' . number_format($total, 0, ',', '.') ?></h5>
+
+                        <div class="fs-12 text-reset fw-normal">Pendapatan Bulan Ini</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-info border-info text-white overflow-hidden">
+                    <?php
+                    $sql = "SELECT COUNT(level) AS total FROM lp_users WHERE level = 'customer'";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+                    $total = $row['total'];
+                    ?>
+                    <div class="card-body">
+                        <i class="feather-users fs-20"></i>
+                        <h5 class="fs-4 text-reset mt-4 mb-1"><?= $total ?></h5>
+                        <div class="fs-12 text-reset fw-normal">Total Pelanggan</div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
             <!-- [Payment Records] start -->
             <div class="col-xxl-8">
                 <div class="card stretch stretch-full">
@@ -84,8 +154,6 @@
                 </div>
             </div>
             <!-- [Payment Records] end -->
-
-
         </div>
     </div>
     <!-- [ Main Content ] end -->

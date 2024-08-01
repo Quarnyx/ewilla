@@ -26,10 +26,40 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                        </div>
+                            <div class="input-group" id="password-field">
+                                <input type="password" class="form-control" name="password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary"
+                                        style="background-color: #f53f85 !important; margin-top: 5px;" type="button"
+                                        onclick="togglePasswordVisibility()">
+                                        <i class="bx bx-low-vision"></i>
+                                    </button>
+                                </div>
+                            </div>
 
+                            <script>
+                                function togglePasswordVisibility() {
+                                    var passwordField = document.querySelector('#password-field input[type="password"]');
+                                    if (passwordField.type === "password") {
+                                        passwordField.type = "text";
+                                    } else {
+                                        passwordField.type = "password";
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <?php if (isset($_GET['pass'])): ?>
+                            <div class="alert alert-danger" role="alert">
+                                Password salah!
+                            </div>
+                        <?php endif; ?>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" name="remember_me" id="remember_me">
+                            <label class="form-check-label" for="remember_me">Ingat Saya</label>
+                        </div>
                         <button type="submit" class="default-btn">Login</button>
+                        <a href="#" class="forgot-password">Lupa Password?</a>
+
                     </form>
                 </div>
             </div>

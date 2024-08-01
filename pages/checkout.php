@@ -108,7 +108,7 @@ $row = mysqli_fetch_assoc($result);
                                 </p>
                                 <p>
                                     <input type="radio" id="payment" name="payment" value="bni">
-                                    <label for="paypal">BNI</label>
+                                    <label for="payment">BNI</label>
                                     Nomor Rekening 1598286525
                                 </p>
                                 <p>

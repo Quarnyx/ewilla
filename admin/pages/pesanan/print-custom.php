@@ -121,6 +121,35 @@
 
     </table>
 </body>
+<?php
+session_start();
+function tanggala($tanggal)
+{
+    $bulan = array(
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+    $split = explode('-', $tanggal);
+    return $split[2] . ' ' . $bulan[(int) $split[1]] . ' ' . $split[0];
+}
+?>
+<div class="mt-3" style="text-align:end;">
+    <hr>
+    <p class="font-weight-bold">Demak, <?= tanggala(date('Y-m-d')) ?><br></p>
+    <div class="mt-5">
+        <p class="font-weight-bold">(<?php echo $_SESSION['user_name'] ?>)</p>
+    </div>
+</div>
 <script>
     window.print();
     window.onafterprint = window.close;

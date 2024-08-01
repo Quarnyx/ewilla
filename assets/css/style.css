@@ -60,6 +60,7 @@ body {
   margin: 0;
   font-family: "Lato";
   font-size: 15px;
+  background-color: #ffe7e7;
 }
 
 img {
@@ -5228,6 +5229,23 @@ Facility CSS
   font-weight: 700;
 }
 
+.single-facility-box p {
+  display: block;
+  background-color: #ffffff;
+  position: relative;
+  padding-top: 18px;
+  z-index: 1;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+}
+
 .single-facility-box:hover .icon {
   background-color: #f53f85;
   color: #ffffff;
@@ -7834,19 +7852,21 @@ Modal CSS
 Page Title CSS
 =================================================*/
 .page-title-area {
-  background-color: #f8f8f8;
+  background-color: #E91E63;
   padding-top: 35px;
   padding-bottom: 30px;
 }
 
 .page-title-content {
   position: relative;
+  color: #ffffff;
 }
 
 .page-title-content h2 {
   margin-bottom: 0;
   font-size: 25px;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .page-title-content ul {
@@ -7859,13 +7879,14 @@ Page Title CSS
   top: 50%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
+  color: #ffffff;
 }
 
 .page-title-content ul li {
   display: inline-block;
   margin-left: 15px;
   font-weight: 600;
-  color: #f53f85;
+  color: #ffffff;
   position: relative;
 }
 

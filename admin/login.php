@@ -55,11 +55,34 @@
                                         <input type="text" name="username" class="form-control" placeholder="Username"
                                             required>
                                     </div>
+                                    <?php if (isset($_GET['username'])): ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            Username salah!
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="mb-3">
                                         <input type="password" name="password" class="form-control"
                                             placeholder="Password" required>
                                     </div>
-
+                                    <?php if (isset($_GET['pass'])): ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            Password salah!
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="rememberMe"
+                                                    name="remember_me">
+                                                <label class="custom-control-label c-pointer" for="rememberMe">Remember
+                                                    Me</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="auth-reset-cover.html" class="fs-11 text-primary">Forget
+                                                password?</a>
+                                        </div>
+                                    </div>
                                     <div class="mt-5">
                                         <button type="submit" class="btn btn-lg btn-primary w-100">Login</button>
                                     </div>

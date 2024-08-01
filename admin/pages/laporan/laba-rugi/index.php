@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card stretch stretch-full invoice-container">
-                    <div class="card-body p-0">
+                    <div class="card-body">
                         <?php
                         require_once './config.php';
                         ?>
@@ -203,8 +203,37 @@
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        function tanggala($tanggal)
+                        {
+                            $bulan = array(
+                                1 => 'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $split = explode('-', $tanggal);
+                            return $split[2] . ' ' . $bulan[(int) $split[1]] . ' ' . $split[0];
+                        }
+                        ?>
+                        <div class="mt-3" style="text-align:end;">
+                            <hr>
+                            <p class="font-weight-bold">Demak, <?= tanggala(date('Y-m-d')) ?><br></p>
+                            <div class="mt-5">
+                                <p class="font-weight-bold">(<?php echo $_SESSION['user_name'] ?>)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <button class="btn btn-primary printBTN" type="button">Print</button>
             </div>
         </div>
