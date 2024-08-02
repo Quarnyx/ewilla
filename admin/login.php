@@ -61,8 +61,30 @@
                                         </div>
                                     <?php endif; ?>
                                     <div class="mb-3">
-                                        <input type="password" name="password" class="form-control"
-                                            placeholder="Password" required>
+                                        <div class="form-group">
+                                            <div class="input-group" id="password-field">
+                                                <input type="password" name="password" class="form-control"
+                                                    placeholder="Password" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="button"
+                                                        onclick="togglePasswordVisibility()">
+                                                        <i class="feather-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function togglePasswordVisibility() {
+                                                var passwordField = document
+                                                    .querySelector('#password-field input[type="password"]');
+                                                if (passwordField.type === "password") {
+                                                    passwordField.type = "text";
+                                                } else {
+                                                    passwordField.type = "password";
+                                                }
+                                            }
+                                        </script>
                                     </div>
                                     <?php if (isset($_GET['pass'])): ?>
                                         <div class="alert alert-danger" role="alert">

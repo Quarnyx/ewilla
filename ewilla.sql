@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2024 at 07:44 PM
+-- Generation Time: Aug 02, 2024 at 12:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,6 +68,13 @@ CREATE TABLE `lp_cart` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lp_cart`
+--
+
+INSERT INTO `lp_cart` (`cart_id`, `user_id`, `qty`, `variation_id`, `created_at`) VALUES
+(33, 7, 1, 20, '2024-07-31 12:55:56');
+
 -- --------------------------------------------------------
 
 --
@@ -104,15 +111,18 @@ CREATE TABLE `lp_customers` (
   `phone_number` varchar(20) DEFAULT NULL,
   `province_id` int(5) NOT NULL,
   `city_id` int(5) NOT NULL,
-  `post_code` int(10) NOT NULL
+  `post_code` int(10) NOT NULL,
+  `account_number` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `lp_customers`
 --
 
-INSERT INTO `lp_customers` (`customer_id`, `user_id`, `customer_name`, `address`, `phone_number`, `province_id`, `city_id`, `post_code`) VALUES
-(3, 7, 'customer', 'Jl. Sari Agung No. 57. Cepiring, Kendal', '0856431804932', 10, 181, 51353);
+INSERT INTO `lp_customers` (`customer_id`, `user_id`, `customer_name`, `address`, `phone_number`, `province_id`, `city_id`, `post_code`, `account_number`) VALUES
+(3, 7, 'customer', 'Jl. Sari Agung No. 57. Cepiring, Kendal', '0856431804932', 10, 181, 51353, 13411),
+(4, 8, 'customer', 'Jl. Sari Agung No. 57. Cepiring, Kendal', '0856431804932', 10, 181, 51353, 23141),
+(5, 9, 'Jono', 'Pluto', '081328880070', 1, 32, 12160, 75068);
 
 -- --------------------------------------------------------
 
@@ -155,7 +165,11 @@ CREATE TABLE `lp_inventory_transaction` (
 INSERT INTO `lp_inventory_transaction` (`inventory_transactions_id`, `product_price`, `quantity`, `created_at`, `transaction_id`, `transaction_type`, `variation_id`, `product_id`) VALUES
 (24, 200000.00, 21, '2023-04-01', '24', 'In', NULL, 8),
 (25, 228000.00, 1, '2024-07-15', '25', 'Out', 28, 11),
-(26, 200000.00, 1, '2024-07-15', '26', 'Out', 22, 8);
+(26, 200000.00, 1, '2024-07-15', '26', 'Out', 22, 8),
+(27, 200000.00, 1, '2024-07-19', '28', 'Out', 20, 8),
+(29, 150000.00, 100, '2024-07-13', NULL, 'In', NULL, 24),
+(30, 200000.00, 2, '2024-08-02', '31', 'Out', 22, 8),
+(31, 200000.00, 2, '2024-08-02', '32', 'Out', 22, 8);
 
 -- --------------------------------------------------------
 
@@ -176,7 +190,9 @@ CREATE TABLE `lp_invoices` (
 --
 
 INSERT INTO `lp_invoices` (`invoice_id`, `invoice_number`, `order_id`, `status`, `payment`) VALUES
-(12, 'INV-15-4374', 15, 'Proses', 'bri');
+(12, 'INV-15-4374', 15, 'Dikirim', 'bri'),
+(13, 'INV-16-3867', 16, 'Selesai', 'bri'),
+(14, 'INV-17-8169', 17, 'Proses', 'bni');
 
 -- --------------------------------------------------------
 
@@ -197,7 +213,9 @@ CREATE TABLE `lp_orders` (
 --
 
 INSERT INTO `lp_orders` (`order_id`, `customer_id`, `order_total`, `status`, `timestamp`) VALUES
-(15, 3, 439000, 'pending', '2024-07-15 11:25:15');
+(15, 3, 439000, 'pending', '2024-07-15 11:25:15'),
+(16, 3, 214000, 'pending', '2024-07-19 09:03:32'),
+(17, 5, 435000, 'pending', '2024-08-02 05:20:57');
 
 -- --------------------------------------------------------
 
@@ -220,7 +238,9 @@ CREATE TABLE `lp_order_details` (
 
 INSERT INTO `lp_order_details` (`order_detail_id`, `order_id`, `variation_id`, `custom_order_id`, `quantity`, `total`) VALUES
 (20, 15, 28, NULL, 1, 228000),
-(21, 15, 22, NULL, 1, 200000);
+(21, 15, 22, NULL, 1, 200000),
+(22, 16, 20, NULL, 1, 200000),
+(23, 17, 22, NULL, 2, 400000);
 
 -- --------------------------------------------------------
 
@@ -244,7 +264,8 @@ CREATE TABLE `lp_payment_confirm` (
 --
 
 INSERT INTO `lp_payment_confirm` (`confirm_id`, `created_at`, `invoice_id`, `payment_method`, `cust_bank`, `cust_bank_name`, `amount`, `proof`) VALUES
-(2, '2024-07-15', 8, 'Dana', 'BRI', 'Nama Orang', 434000.00, '168129.jpg');
+(2, '2024-07-15', 8, 'Dana', 'BRI', 'Nama Orang', 434000.00, '168129.jpg'),
+(4, '2024-07-19', 13, 'BRI', 'BNI', 'Nama Orang', 181000.00, '520116.png');
 
 -- --------------------------------------------------------
 
@@ -279,11 +300,13 @@ INSERT INTO `lp_products` (`product_id`, `product_code`, `product_name`, `catego
 (15, 'SKU-20192', 'DITSY BLOUSE', 'product', 60000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>S &nbsp; &nbsp;= LD 98, PB 125 cm, Panjang Lengan 45 cm<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>&bull; &nbsp; &nbsp;Warna : DARK MILO<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Detail Produk :<br>Bahan Satin, yang pastinya anti kusut, nyaman dipakai<br>Terdapat kancing dibagian ujung lengan<br>Tambahan tali dibagian tengah<br>NOTED:<br>Akan ada sedikit perbedaan warna akibat cahaya dan kamera<br>Akan ada sedikit perbedaan pada ukuran 1-3 cm karena pengukuran secara normal<br>Perfect banget buat dinner, acara formal maupun buat OOTD an🎀<br>Happy Shopping ^^</p>', 'pcs', '2024-07-15 17:29:01', 4),
 (16, 'SKU-28983', 'KANESYA BLOUSE', 'product', 150000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>XL &nbsp; &nbsp; = LD 115, PB 135 cm, Panjang Lengan 53 cm<br>&bull; &nbsp; &nbsp;Warna : HITAM CREAM<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Blouse simple, elegant cocok dipakai buat OOTDan atau ke kondangan 😍<br>Detail Produk :<br>Bagian dalam bahan sutra bagian luar bahan motif tile<br>Lengan balon<br>Bagian tengah ada aksen payet<br>NOTED: Dikarenakan bentuk dan ukuran setiap orang berbeda-beda, jadi silahkan diukur untuk menyesuaikan dengan ukuran produknya ya.</p>', 'pcs', '2024-07-15 17:32:53', 4),
 (17, 'SKU-2019267', 'RUFFLE BLOUSE', 'product', 45000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>XL &nbsp; &nbsp; = LD 115, PB 135 cm, Panjang Lengan 53 cm<br>&bull; &nbsp; &nbsp;Warna : HITAM, PINK<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Tidak nerawang, nyaman sekali dipakai, lembut dan bikin kalian cutie karena ada rufflenya🎀<br>Detail Produk :<br>Bahan katun<br>Variasi ruffle depan<br>Kerah Pita<br>Happy Shopping ^^</p>', 'pcs', '2024-07-15 17:36:38', 4),
-(18, 'SKU-28123', 'YOONA SHIRT', 'product', 55000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>S &nbsp; &nbsp;= LD 98, PB 125 cm, Panjang Lengan 45 cm<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>XL &nbsp; &nbsp; = LD 115, PB 135 cm, Panjang Lengan 53 cm<br>XXL &nbsp; &nbsp;= LD 120, PB 138 cm, Panjang Lengan 55 cm<br>&bull; &nbsp; &nbsp;Warna : MERAH, PUTIH, SALEM&nbsp;<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Kemeja basic ini kita hadirkan dengan cuttingan longgar, kemeja ini tidak terlihat oversize namun ketika dipakai serasa pakai kemeja oversize. Cocok banget dipakai acara formal seperti buat kerja, kuliah atau daily kalian 🎀<br>Material yang dipakai sangat lembut dan cukup adem cocok untuk iklim di Indonesia.<br>Detail Produk :<br>Bahan rayon<br>Saku dibagian depan kiri<br>Kerah kemeja<br>Kancing didepan<br>Kancing dibagian ujung lengan<br>Happy shopping ^^</p>', 'pcs', '2024-07-15 17:41:15', 1),
+(18, 'SKU-28123', 'YOONA SHIRT', 'product', 55000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>S &nbsp; &nbsp;= LD 98, PB 125 cm, Panjang Lengan 45 cm<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>XL &nbsp; &nbsp; = LD 115, PB 135 cm, Panjang Lengan 53 cm<br>XXL &nbsp; &nbsp;= LD 120, PB 138 cm, Panjang Lengan 55 cm<br>&bull; &nbsp; &nbsp;Warna : MERAH, PUTIH, SALEM&nbsp;<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Kemeja basic ini kita hadirkan dengan cuttingan longgar, kemeja ini tidak terlihat oversize namun ketika dipakai serasa pakai kemeja oversize. Cocok banget dipakai acara formal seperti buat kerja, kuliah atau daily kalian 🎀<br>Material yang dipakai sangat lembut dan cukup adem cocok untuk iklim di Indonesia.<br>Detail Produk :<br>Bahan rayon<br>Saku dibagian depan kiri<br>Kerah kemeja<br>Kancing didepan<br>Kancing dibagian ujung lengan<br>Happy shopping ^^</p>', 'pcs', '2024-07-16 09:26:36', 2),
 (19, 'SKU-2232', 'YURI SHIRT', 'product', 55000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>S &nbsp; &nbsp;= LD 98, PB 125 cm, Panjang Lengan 45 cm<br>M &nbsp; &nbsp; = LD 100, PB 127 cm, Panjang Lengan 48 cm<br>L &nbsp; &nbsp; = LD 110, PB 130 cm, Panjang Lengan 51 cm<br>XL &nbsp; &nbsp; = LD 115, PB 135 cm, Panjang Lengan 53 cm<br>XXL &nbsp; &nbsp;= LD 120, PB 138 cm, Panjang Lengan 55 cm<br>&bull; &nbsp; &nbsp;Warna : GREY<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Kemeja dengan motif kotak, simple, nyaman dipakai, dan oversize. Cocok untuk acara formal seperti buat ke kantor, kuliah ataupun buat sekedar OOTD an 🎀<br>Detail produk :<br>Bahan katun premium<br>Kancing didepan<br>Kerut dibagian ujung lengan<br>Happy shopping ^</p>', 'pcs', '2024-07-15 18:00:35', 2),
 (20, 'SKU-5454', 'NAVA SKIRT', 'product', 150000.00, '<p>&bull; &nbsp; &nbsp;Ukuran :&nbsp;<br>L &nbsp; &nbsp;&nbsp;<br>Lingkar Pinggang : 70-86 cm<br>Lingkar Pinggul : 100 cm<br>Panjang Rok : 92 cm<br>XL &nbsp; &nbsp;&nbsp;<br>Lingkar Pinggang : 87-102 cm<br>Lingkar Pinggul : 105 cm<br>Panjang Rok : 92 cm<br>&bull; &nbsp; &nbsp;Warna : KHAKI, HITAM<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Karakteristik bahan tebal, tidak terawang, halus, stretch dan pastinya nyaman digunakan🎀<br>Detail Produk :<br>Bahan premium katun sweding<br>Dua saku bagian depan<br>Bukaan resleting dan kancing pada bagian depan rok<br>Terdapat karet pada sisi pinggang rok<br>Belahan -/+ 20 cm pada bagian belakang tengah rok untuk memudahkan langkah saat pemakaian<br>Happy shopping ^^</p>', 'pcs', '2024-07-15 18:04:55', 5),
 (21, 'SKU-1231', 'SONGKET SKIRT', 'product', 100000.00, '<p>L &nbsp; &nbsp;&nbsp;<br>Lingkar Pinggang : 70-86 cm<br>Lingkar Pinggul : 100 cm<br>Panjang Rok : 92 cm<br>XL &nbsp; &nbsp;&nbsp;<br>Lingkar Pinggang : 87-102 cm<br>Lingkar Pinggul : 105 cm<br>Panjang Rok : 92 cm<br>&bull; &nbsp; &nbsp;Warna : CHOCO<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Cocok untuk dijadikan bawahan acara formal seperti resepsi pernikahan, tunangan, kondangan atau wisuda. Dengan bahan anti kusut dan nyaman dipakai 😍🎀<br>Detail Produk :<br>Bahan songket berkualitas<br>Karet pada pinggang<br>Belahan disamping kiri -/+ 20 cm<br>Happy shopping ^^</p>', 'pcs', '2024-07-15 18:08:30', 5),
-(22, 'SKU 9298', 'JILBAB PARIS PERSEGI', 'product', 20000.00, '<p>&bull; &nbsp; &nbsp;Ukuran : Ukuran 115 x 115 cm<br>&bull; &nbsp; &nbsp;Warna : BIRU, CHOCO, CREAM, GREY, HITAM, MERAH, PUTIH&nbsp;<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Dengan bahan yang tidak mudah kusut dan mudah tegak sangat cocok untuk kamu yang mencari hijab sat set daily 😍🎀<br>o &nbsp; &nbsp;Hijab Nyaman dan Terjangkau<br>o &nbsp; &nbsp;Finishing Neci Rapih<br>o &nbsp; &nbsp;Kemasan Premium<br>Catatan :<br>Ada kemungkinan sedikit perbedaan warna produk asli dengan warna produk yang ditampilkan di layar, akibat perbedaan spesifikasi gadget yang digunakan.</p>', 'pcs', '2024-07-15 18:15:06', 1);
+(22, 'SKU 9298', 'JILBAB PARIS PERSEGI', 'product', 20000.00, '<p>&bull; &nbsp; &nbsp;Ukuran : Ukuran 115 x 115 cm<br>&bull; &nbsp; &nbsp;Warna : BIRU, CHOCO, CREAM, GREY, HITAM, MERAH, PUTIH&nbsp;<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Dengan bahan yang tidak mudah kusut dan mudah tegak sangat cocok untuk kamu yang mencari hijab sat set daily 😍🎀<br>o &nbsp; &nbsp;Hijab Nyaman dan Terjangkau<br>o &nbsp; &nbsp;Finishing Neci Rapih<br>o &nbsp; &nbsp;Kemasan Premium<br>Catatan :<br>Ada kemungkinan sedikit perbedaan warna produk asli dengan warna produk yang ditampilkan di layar, akibat perbedaan spesifikasi gadget yang digunakan.</p>', 'pcs', '2024-07-15 18:15:06', 1),
+(23, 'SKU-34343', 'Baju Oren', 'product', 60000.00, '<p>&bull; &nbsp; &nbsp;Ukuran : Ukuran 115 x 115 cm<br>&bull; &nbsp; &nbsp;Warna : BIRU, CHOCO, CREAM, GREY, HITAM, MERAH, PUTIH&nbsp;<br>&bull; &nbsp; &nbsp;Informasi Produk :<br>Dengan bahan yang tidak mudah kusut dan mudah tegak sangat cocok untuk kamu yang mencari hijab sat set daily 😍🎀<br>o &nbsp; &nbsp;Hijab Nyaman dan Terjangkau<br>o &nbsp; &nbsp;Finishing Neci Rapih<br>o &nbsp; &nbsp;Kemasan Premium<br>Catatan :<br>Ada kemungkinan sedikit perbedaan warna produk asli dengan warna produk yang ditampilkan di layar, akibat perbedaan spesifikasi gadget yang digunakan.</p>', 'pcs', '2024-07-19 15:21:55', 2),
+(24, 'dadada', 'Benang', 'material', 150000.00, NULL, 'm', '2024-07-19 16:33:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -318,7 +341,9 @@ CREATE TABLE `lp_shipping` (
 --
 
 INSERT INTO `lp_shipping` (`shipping_id`, `courier`, `service`, `invoice_id`, `receipt_number`, `cost`) VALUES
-(9, 'JNE', 'REG', 12, 'LV890721544CN', 11000.00);
+(9, 'JNE', 'REG', 12, 'LV890721544CN', 11000.00),
+(10, 'JNE', 'YES', 13, 'LV890721544CN', 14000.00),
+(11, 'JNE', 'REG', 14, NULL, 35000.00);
 
 -- --------------------------------------------------------
 
@@ -343,7 +368,12 @@ INSERT INTO `lp_transactions` (`transaction_id`, `transaction_date`, `amount`, `
 (24, '2023-04-01', 4200000.00, 'Penambahan Stok', 21, 1),
 (25, '2024-07-15', 228000.00, 'Penjualan Produk SEORI DRESS', 1, 20),
 (26, '2024-07-15', 200000.00, 'Penjualan Produk HYERI DRESS', 1, 20),
-(27, '2023-03-01', 50000000.00, 'Modal Awal', 1, 8);
+(27, '2023-03-01', 50000000.00, 'Modal Awal', 1, 8),
+(28, '2024-07-19', 200000.00, 'Penjualan Produk HYERI DRESS', 1, 20),
+(29, '2024-07-19', 200000.00, 'Penjualan Produk HYERI DRESS', 1, 20),
+(30, '2024-07-03', 10000000.00, 'Modal Awal', 1, 8),
+(31, '2024-08-02', 400000.00, 'Penjualan Produk HYERI DRESS', 1, 20),
+(32, '2024-08-02', 400000.00, 'Penjualan Produk HYERI DRESS', 1, 20);
 
 -- --------------------------------------------------------
 
@@ -365,7 +395,9 @@ CREATE TABLE `lp_users` (
 
 INSERT INTO `lp_users` (`user_id`, `email`, `name`, `level`, `password`) VALUES
 (1, 'admin@local.com', 'Admin', 'Admin', '0192023a7bbd73250516f069df18b500'),
-(7, 'customer@gmail.com', 'customer', 'Customer', 'f4ad231214cb99a985dff0f056a36242');
+(7, 'customer@gmail.com', 'customer', 'Customer', 'f4ad231214cb99a985dff0f056a36242'),
+(8, 'apaaja@gmail.com', 'customer', 'Customer', '674dc61f709aff3c8580c4c66872cbf5'),
+(9, 'jono@gmai.com', 'Jono', 'Customer', 'ef9322a1a342a36856e9e8929b19437a');
 
 -- --------------------------------------------------------
 
@@ -447,7 +479,9 @@ INSERT INTO `lp_variations` (`variation_id`, `product_id`, `size`, `color`, `ima
 (81, 22, '115 x 115 cm', 'Grey', '956463.jpg'),
 (82, 22, '115 x 115 cm', 'Hitam', '194686.jpg'),
 (83, 22, '115 x 115 cm', 'Merah', '254134.jpg'),
-(84, 22, '115 x 115 cm', 'Putih', '67715.jpg');
+(84, 22, '115 x 115 cm', 'Putih', '67715.jpg'),
+(85, 23, 'M', 'Hitam', '54086.jpg'),
+(86, 23, 'L', 'Hitam', '599515.jpg');
 
 -- --------------------------------------------------------
 
@@ -581,6 +615,7 @@ CREATE TABLE `v_invoicelist` (
 ,`name` varchar(255)
 ,`status` varchar(15)
 ,`timestamp` timestamp
+,`account_number` int(11)
 );
 
 -- --------------------------------------------------------
@@ -802,7 +837,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_invoicelist`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_invoicelist`  AS SELECT `lp_invoices`.`invoice_id` AS `invoice_id`, `lp_invoices`.`invoice_number` AS `invoice_number`, `lp_invoices`.`order_id` AS `order_id`, `lp_users`.`user_id` AS `user_id`, `lp_users`.`name` AS `name`, `lp_invoices`.`status` AS `status`, `lp_orders`.`timestamp` AS `timestamp` FROM ((((`lp_orders` join `lp_order_details` on(`lp_order_details`.`order_id` = `lp_orders`.`order_id`)) join `lp_invoices` on(`lp_invoices`.`order_id` = `lp_orders`.`order_id`)) join `lp_customers` on(`lp_orders`.`customer_id` = `lp_customers`.`customer_id`)) join `lp_users` on(`lp_customers`.`user_id` = `lp_users`.`user_id`)) GROUP BY `lp_invoices`.`invoice_id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_invoicelist`  AS SELECT `lp_invoices`.`invoice_id` AS `invoice_id`, `lp_invoices`.`invoice_number` AS `invoice_number`, `lp_invoices`.`order_id` AS `order_id`, `lp_users`.`user_id` AS `user_id`, `lp_users`.`name` AS `name`, `lp_invoices`.`status` AS `status`, `lp_orders`.`timestamp` AS `timestamp`, `lp_customers`.`account_number` AS `account_number` FROM ((((`lp_orders` join `lp_order_details` on(`lp_order_details`.`order_id` = `lp_orders`.`order_id`)) join `lp_invoices` on(`lp_invoices`.`order_id` = `lp_orders`.`order_id`)) join `lp_customers` on(`lp_orders`.`customer_id` = `lp_customers`.`customer_id`)) join `lp_users` on(`lp_customers`.`user_id` = `lp_users`.`user_id`)) GROUP BY `lp_invoices`.`invoice_id` ;
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1047,7 @@ ALTER TABLE `lp_accounts`
 -- AUTO_INCREMENT for table `lp_cart`
 --
 ALTER TABLE `lp_cart`
-  MODIFY `cart_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `cart_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `lp_category`
@@ -1024,7 +1059,7 @@ ALTER TABLE `lp_category`
 -- AUTO_INCREMENT for table `lp_customers`
 --
 ALTER TABLE `lp_customers`
-  MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lp_custom_order`
@@ -1036,37 +1071,37 @@ ALTER TABLE `lp_custom_order`
 -- AUTO_INCREMENT for table `lp_inventory_transaction`
 --
 ALTER TABLE `lp_inventory_transaction`
-  MODIFY `inventory_transactions_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `inventory_transactions_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `lp_invoices`
 --
 ALTER TABLE `lp_invoices`
-  MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `invoice_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `lp_orders`
 --
 ALTER TABLE `lp_orders`
-  MODIFY `order_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `order_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `lp_order_details`
 --
 ALTER TABLE `lp_order_details`
-  MODIFY `order_detail_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `order_detail_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `lp_payment_confirm`
 --
 ALTER TABLE `lp_payment_confirm`
-  MODIFY `confirm_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `confirm_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lp_products`
 --
 ALTER TABLE `lp_products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `lp_return`
@@ -1078,25 +1113,25 @@ ALTER TABLE `lp_return`
 -- AUTO_INCREMENT for table `lp_shipping`
 --
 ALTER TABLE `lp_shipping`
-  MODIFY `shipping_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `shipping_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `lp_transactions`
 --
 ALTER TABLE `lp_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `lp_users`
 --
 ALTER TABLE `lp_users`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `lp_variations`
 --
 ALTER TABLE `lp_variations`
-  MODIFY `variation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `variation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- Constraints for dumped tables
