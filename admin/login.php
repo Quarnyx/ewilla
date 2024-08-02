@@ -101,7 +101,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <a href="auth-reset-cover.html" class="fs-11 text-primary">Forget
+                                            <a href="#" class="fs-11 text-primary">Lupas
                                                 password?</a>
                                         </div>
                                     </div>
