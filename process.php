@@ -23,9 +23,12 @@ if ($_GET['act'] == 'register') {
     $result = $conn->query($getuserid);
     $row = $result->fetch_assoc();
     $userid = $row['user_id'];
+
+    // generate random 5 digit number
+    $account_number = rand(10000, 99999);
     // insert into customer info
-    $customer = "INSERT INTO `lp_customers` (`user_id`, `customer_name`, `address`, `phone_number`, `province_id`, `city_id`, `post_code`) 
-    VALUES ('$userid', '$name', '$address', '$phone_number', '$province_id', '$city_id', '$post_code')";
+    $customer = "INSERT INTO `lp_customers` (`user_id`, `customer_name`, `address`, `phone_number`, `province_id`, `city_id`, `post_code`, `account_number`) 
+    VALUES ('$userid', '$name', '$address', '$phone_number', '$province_id', '$city_id', '$post_code', '$account_number')";
     if ($conn->query($customer) === TRUE) {
         echo "Berhasil";
     } else {
@@ -110,7 +113,7 @@ if ($_GET['act'] == 'remove_cart') {
 if ($_GET['act'] == 'checkout') {
     $cost = $_POST['cost'];
     $customer_id = $_POST['customer_id'];
-    $status = 'pending';
+    $status = 'Pending';
     // get all from cart
     $cart = "SELECT * FROM `v_cart` WHERE `user_id` = '{$_POST['user_id']}'";
     $result = $conn->query($cart);

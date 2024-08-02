@@ -6,7 +6,8 @@
                     No
                 </th>
                 <th>Kode Invoice</th>
-                <th>Nama Pembeli</th>
+                <th>Nama Pelanggan</th>
+                <th>Kode Pelanggan</th>
                 <th>Tanggal Beli</th>
                 <th>Status</th>
                 <th class="text-end">Aksi</th>
@@ -36,10 +37,19 @@
                             </div>
                         </a>
                     </td>
+                    <td><?php echo $row['account_number'] ?></td>
                     <td class="fw-bold text-dark">
                         <?php echo $row['timestamp'] ?>
                     </td>
-                    <td><?php echo $row['status'] ?></td>
+                    <td><span class="badge bg-<?php if ($row['status'] == 'Pending') {
+                        echo 'warning';
+                    } elseif ($row['status'] == 'Proses') {
+                        echo 'primary';
+                    } elseif ($row['status'] == 'Selesai') {
+                        echo 'success';
+                    } elseif ($row['status'] == 'Dikirim') {
+                        echo 'info';
+                    } ?>"><?= $row['status'] ?></span></td>
                     <td>
                         <div class="hstack gap-2 justify-content-end">
 

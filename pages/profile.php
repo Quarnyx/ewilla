@@ -86,12 +86,13 @@ $row = mysqli_fetch_assoc($result);
             </div>
             <div class="col-md-6">
                 <h2>Daftar Pesanan</h2>
-                <div class="order-table table-responsive">
+                <div class="table-responsive bg-white p-3">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Nomor Invoice</th>
-                                <th scope="col"></th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
 
@@ -107,8 +108,20 @@ $row = mysqli_fetch_assoc($result);
                                             <a href="#"><?= $row['invoice_number'] ?></a>
                                         </td>
 
-                                        <td class="product-total">
-                                            <a btn="btn btn-primary"
+                                        <td>
+                                            <button class="btn btn-<?php if ($row['status'] == 'Pending') {
+                                                echo 'warning';
+                                            } elseif ($row['status'] == 'Proses') {
+                                                echo 'primary';
+                                            } elseif ($row['status'] == 'Selesai') {
+                                                echo 'success';
+                                            } elseif ($row['status'] == 'Dikirim') {
+                                                echo 'info';
+                                            } ?>"><?= $row['status'] ?></button>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-primary"
                                                 href="?page=invoice-detail&id=<?= $row['invoice_id'] ?>">Detail</a>
                                         </td>
                                     </tr>
