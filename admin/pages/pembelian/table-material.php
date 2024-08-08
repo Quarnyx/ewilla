@@ -78,21 +78,30 @@
                 // Perform the AJAX request
                 console.log(id);
                 $.ajax({
-                    url: 'process.php?act=hapus-persediaan',
+                    url: 'process.php?act=hapus-produk',
                     type: 'POST',
                     data: { id: id }, // Replace with actual data
                     success: function (response) {
-                        Swal.fire(
-                            'Terhapus!',
-                            'Data sudah dihapus',
-                            'success'
-                        );
+                        if (response == "Berhasil") {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Data sudah dihapus',
+                                'success'
+                            );
+                            loadContent();
+                        } else {
+                            Swal.fire(
+                                'Data Gagal Dihapus!',
+                                'Sudah ada transaksi pembelian, silahkan hapus transaksi pembelian terlebih dahulu',
+                                'error'
+                            );
+                        }
                         loadContent();
                     },
                     error: function (xhr, status, error) {
                         Swal.fire(
                             'Error!',
-                            'There was a problem deleting your item.',
+                            'Gagal dihapus',
                             'error'
                         );
                     }

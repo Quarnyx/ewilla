@@ -9,14 +9,20 @@ require_once '../../config.php';
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="" class="form-label">Tanggal Transaksi</label>
-                    <input type="date" class="form-control" name="created_at" id="created_at">
+                    <label for="" class="form-label">Nama Produk</label>
+                    <input type="text" class="form-control" name="product_name" id="product_name">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="" class="form-label">Nama Produk</label>
-                    <input type="text" class="form-control" name="product_name" id="product_name">
+                    <label for="" class="form-label">Satuan</label>
+                    <select class="form-select select2" name="unit" id="unit">
+                        <option value="m"> Meter</option>
+                        <option value="lusin"> Lusin</option>
+                        <option value="pcs"> PCS</option>
+                        <option value="roll"> Roll</option>
+                        <option value="pax"> Pax</option>
+                    </select>
                 </div>
             </div>
 
@@ -32,21 +38,6 @@ require_once '../../config.php';
                 <div class="mb-3">
                     <label for="" class="form-label">Harga</label>
                     <input type="text" class="form-control" name="product_price" id="product_price">
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="" class="form-label">Satuan</label>
-                    <select class="form-select select2" name="unit" id="unit">
-                        <option value="m"> Meter</option>
-                        <option value="lusin"> Lusin</option>
-                        <option value="pcs"> PCS</option>
-                        <option value="roll"> Roll</option>
-                        <option value="pax"> Pax</option>
-                    </select>
                 </div>
             </div>
 

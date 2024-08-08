@@ -11,7 +11,7 @@
     <!-- [ Main Content ] start -->
     <div class="main-content">
         <div class="row">
-            <div class="col-xxl-4">
+            <div class="col-md-12">
                 <div class="card stretch stretch-full overflow-hidden">
 
                     <div class="card-body">
@@ -122,7 +122,7 @@
         </div>
         <div class="row">
             <!-- [Payment Records] start -->
-            <div class="col-xxl-8">
+            <div class="col-md-12">
                 <div class="card stretch stretch-full">
                     <div class="card-header">
                         <h5 class="card-title">Penjualan Tahun ini</h5>

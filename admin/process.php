@@ -113,12 +113,12 @@ if ($_GET['act'] == 'hapus-persediaan-produk') {
     }
 }
 if ($_GET['act'] == 'update-persediaan') {
-    $id = $_POST['inventory_transactions_id'];
     $product_id = $_POST['product_id'];
     $product_price = $_POST['product_price'];
-    $quantity = $_POST['quantity'];
-    $created_at = $_POST['created_at'];
-    $sql = "UPDATE `lp_inventory_transaction` SET `product_id` = '$product_id', `product_price` = '$product_price', `quantity` = '$quantity', `created_at` = '$created_at' WHERE `inventory_transactions_id` = '$id'";
+    $product_name = $_POST['product_name'];
+    $product_code = $_POST['product_code'];
+
+    $sql = "UPDATE `lp_products` SET `product_price` = '$product_price', `product_name` = '$product_name', `product_code` = '$product_code' WHERE `product_id` = '$product_id'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         echo "Berhasil Update";
@@ -151,11 +151,17 @@ if ($_GET['act'] == 'hapus-produk') {
     $id = $_POST['id'];
     $sql = "DELETE FROM `lp_products` WHERE `product_id` = '$id'";
     $result = mysqli_query($conn, $sql);
-    if ($result) {
+
+    if (mysqli_errno($conn) == 0) {
         echo "Berhasil";
-    } else {
-        echo "Gagal";
-        echo mysqli_error($conn);
+        http_response_code(200);
+    } else if (mysqli_errno($conn) == 1451) {
+        echo "Gagal, produk masih digunakan";
+        http_response_code(500);
+        die(json_encode([
+            'status' => 'error',
+            'message' => 'Gagal, produk masih digunakan'
+        ]));
     }
 }
 if ($_GET['act'] == 'update-produk') {

@@ -94,11 +94,20 @@
                     type: 'POST',
                     data: { id: id }, // Replace with actual data
                     success: function (response) {
-                        Swal.fire(
-                            'Terhapus!',
-                            'Data sudah dihapus',
-                            'success'
-                        );
+                        if (response == "Berhasil") {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Data sudah dihapus',
+                                'success'
+                            );
+                            loadContent();
+                        } else {
+                            Swal.fire(
+                                'Data Gagal Dihapus!',
+                                'Sudah ada transaksi penjualan, silahkan hapus transaksi penjualan terlebih dahulu',
+                                'error'
+                            );
+                        }
                         loadContent();
                     },
                     error: function (xhr, status, error) {
